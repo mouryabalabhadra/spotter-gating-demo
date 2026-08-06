@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.dev.vars
+.wrangler/
+*.log
+.DS_Store
+.claude/
+
+# The repo installs with pnpm; a stray npm lockfile would give CI a second,
+# conflicting source of truth for the vendored SDK path.
+package-lock.json

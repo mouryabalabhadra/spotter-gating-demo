@@ -1,0 +1,39 @@
+/**
+ * Cloudflare Workers config for the Spotter gating demo.
+ *
+ * The Worker owns two things the browser must never see: the ThoughtSpot
+ * trusted-auth secret key, and the mapping from a demo persona to a real
+ * ThoughtSpot username. Everything else is a static asset served from ./dist.
+ *
+ * `run_worker_first` is on so /api/* reaches the Worker before the SPA
+ * fallback swallows it; the Worker hands every non-API path back to ASSETS.
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "spotter-gating-demo",
+	"main": "worker/index.ts",
+	"compatibility_date": "2025-04-17",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"not_found_handling": "single-page-application",
+		"run_worker_first": true
+	},
+	"observability": {
+		"enabled": true
+	},
+	"vars": {
+		// Public, non-secret defaults. Override per environment with
+		// `wrangler secret put` (secrets) or the Cloudflare dashboard (vars).
+		"TS_HOST": "https://nebula-agents-dev.thoughtspotdev.cloud",
+		"TS_MODEL_ID": "cd252e5c-b552-49a8-821d-3eadaa049cca",
+		"TS_DEFAULT_USERNAME": "tsadmin",
+		// JSON array of demo personas. Each entry drives one persona chip in the
+		// UI and one ThoughtSpot user in the token request.
+		"TS_PERSONAS": "[]",
+		// Set to \"true\" to just-in-time provision persona users on first token
+		// request. Requires a secret key with the right privileges.
+		"TS_AUTO_CREATE_USERS": "false"
+	}
+}
