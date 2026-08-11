@@ -26,7 +26,7 @@
 	"vars": {
 		// Public, non-secret defaults. Override per environment with
 		// `wrangler secret put` (secrets) or the Cloudflare dashboard (vars).
-		"TS_HOST": "https://nebula-agents-dev.thoughtspotdev.cloud",
+		"TS_HOST": "https://nebula-agents-mcp.thoughtspotdev.cloud",
 		"TS_MODEL_ID": "cd252e5c-b552-49a8-821d-3eadaa049cca",
 		"TS_DEFAULT_USERNAME": "tsadmin",
 		// JSON array of demo personas. Each entry drives one persona chip in the
